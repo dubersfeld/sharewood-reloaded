@@ -38,7 +38,8 @@ security:
       filter-order: 3
 
 photos:
-  baseDirPath: /home/dominique/workspace-sharewood-reloaded-resource/photos/
+  # edit this line to match your own filesystem
+  baseDirPath: /home/dominique/sharewood-reloaded/photos/
 
 
 
