@@ -1,0 +1,21 @@
+server:
+  port: 8090
+  context-path: /fleetwood
+  
+security:
+  oauth2:
+    client:
+      client-id: Fleetwood
+      client-secret: y471l12D2y55U5558rd2
+
+# authorization server
+accessTokenUri: http://localhost:5555/authorization/oauth/token
+userAuthorizationUri: http://localhost:5555/authorization/oauth/authorize
+
+# resource server
+producerBaseURL: http://localhost:5555/sharewood/api/
+sharewoodPhotoBaseURL: http://localhost:5555/sharewood/api/photos
+
+# client
+tempDir: /home/dominique/Images/client/tmp/
+

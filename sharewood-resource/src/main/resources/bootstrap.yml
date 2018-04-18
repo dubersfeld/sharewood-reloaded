@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: sharewood-server
+  profiles:
+    active: dev

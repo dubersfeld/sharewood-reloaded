@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/header::header(title='home')">
+</head>
+
+
+<body>
+
+	<div sec:authorize="hasRole('CUSTOMER_USER')" class="display">
+	
+		<br /><br />
+		<h1 class="display">Welcome to Garnet customers page</h1><br /><br />
+	
+		<br /><br />
+  		<a th:href="@{{path}/logout(path=${gatewayPath})}" th:text="'Sign Out'"></a>
+		<br /><br />
+	
+	  	<div>
+			<a th:href="@{{path}/allCustomers(path=${gatewayPath})}" th:text="'All Customers'"></a><br/><br/>
+		</div>
+		
+		<div sec:authorize="hasRole('CREATE')" class="display">
+			<a th:href="@{{path}/createCustomer(path=${gatewayPath})}" th:text="'Add a new customer'"></a><br/><br/>
+		</div>
+		
+		<div sec:authorize="hasRole('UPDATE')" class="display">
+			<a th:href="@{{path}/updateCustomer(path=${gatewayPath})}" th:text="'Update customer address'"></a><br/><br/>
+		</div>
+		
+		<div sec:authorize="hasRole('DELETE')" class="display">
+			<a th:href="@{{path}/deleteCustomer(path=${gatewayPath})}" th:text="'Delete customer'"></a>
+		</div>
+	</div>
+	
+	<div sec:authorize="!hasRole('CUSTOMER_USER')" class="display">
+		
+		<h1>You are not allowed to access this site.</h1>
+	</div>
+	
+</body>
+</html>
