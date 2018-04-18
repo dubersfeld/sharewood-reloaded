@@ -41,7 +41,7 @@ eureka-service       |                  | 8761 |                                
 
 Here are the steps to run the application.
 
-##1. Database creation
+## 1. Database creation
 
 In MySQL client run the commands:
 ```
@@ -52,7 +52,7 @@ SOURCE sharewoodUser.sql
 
 This creates three databases named sharewood\_tokens, sharewood\_photos and sharewood\_users.
 
-##2. JAR files creation
+## 2. JAR files creation
 
 In each project directory:
 1. config-server
@@ -68,8 +68,8 @@ run the Maven command:
 ./mvnw clean package
 ```
 
-Then 
-##3. Launching the application
+ 
+## 3. Launching the application
 
 In each project directory (following the sequence)
 1. config-server
