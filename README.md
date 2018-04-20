@@ -96,9 +96,10 @@ Now the user is presented the authentication page and approval page shown below.
 ![alt text](images/authenticationPage.png "Authentication page")
 ![alt text](images/approvalPage.png "Approval page")
 
-The most tricky part of this project was to force the correct redirection after a successful login to authentication-server. This is achieved by subclassing the beans AuthenticationSuccessHandler and ExceptionTranslationFilter in authentication-server. 
+Note: it takes some time for the routes to be taken into account. With default settings it takes about 2 minutes. If you connect to the resource server or to the authorization server too early you will only see an error message.
 
+The most tricky part of this project was to force the correct redirection after a successful login to authentication-server. This is achieved by subclassing the beans AuthenticationSuccessHandler and ExceptionTranslationFilter in authentication-server.
 
-
+Another point of interest is that the resource server connects to two different databases. This is achieved by creating a separate configuration file for each database.  
 
 
