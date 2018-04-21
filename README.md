@@ -1,5 +1,5 @@
 # sharewood-reloaded
-I present here a microservice-oriented version of the previous project [sharewood-boot-oauth2](https:github.com/dubersfeld/sharewood-boot-oauth2). It uses Spring Session with Redis implementation. It also uses Zuul as a reverse proxy.
+I present here a microservice-oriented version of the previous project [sharewood-boot-oauth2](dubersfeld/sharewood-boot-oauth2). It uses Spring Session with Redis implementation. It also uses Zuul as a reverse proxy.
 
 Here are the prerequisites for running the complete application:
 
