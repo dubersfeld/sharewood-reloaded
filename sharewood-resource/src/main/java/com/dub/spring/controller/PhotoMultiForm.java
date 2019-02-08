@@ -23,7 +23,6 @@ public class PhotoMultiForm {
 
 	public void setUploadedFile(MultipartFile uploadedFile) {
 		this.uploadedFile = uploadedFile;
-		System.out.println("setUploadedFile");
 	}
 
 	public String getTitle() {

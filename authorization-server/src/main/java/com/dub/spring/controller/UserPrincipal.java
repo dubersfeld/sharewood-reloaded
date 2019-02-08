@@ -63,6 +63,9 @@ public class UserPrincipal implements UserDetails, CredentialsContainer, Cloneab
 	public UserPrincipal(MyUser user) {		
 		this.username = user.getUsername();
 		this.hashedPassword = user.getHashedPassword();
+				//.substring(0, 68).getBytes();	
+		//this.hashedPassword = user.getHashedPassword()
+		//		.substring(0, 68).getBytes();	
 		this.enabled = user.isEnabled();
 		this.authorities = user.getAuthorities();
 		this.credentialsNonExpired = user.isCredentialsNonExpired();
@@ -143,6 +146,8 @@ public class UserPrincipal implements UserDetails, CredentialsContainer, Cloneab
             throw new RuntimeException(e); // not possible
         }
     }
+    
+    
 
 
 }

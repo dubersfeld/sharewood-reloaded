@@ -1,5 +1,6 @@
 package com.dub.spring.config;
 
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,8 +9,6 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,32 +31,22 @@ public class TokenStoreConfig {
 	@Value("${myauthorization.jpa.hibernate.naming.physical-strategy:default}")
 	private String physicalStrategy;
 
-	@Primary
-	@Bean(name = "myauthDataSource")
-	@ConfigurationProperties(prefix = "myauthorization.datasource")
-	public DataSource dataSource() {
-		DataSource enclume = DataSourceBuilder.create().build();
-		System.out.println("myauthDataSource built");
-		return enclume;
-		
-	}
- 
-	
+
 	@Primary
 	@Bean(name = "myauthEntityManagerFactory")
 	public LocalContainerEntityManagerFactoryBean 
 			myauthEntityManagerFactory(
 					EntityManagerFactoryBuilder builder,
-					@Qualifier("myauthDataSource") DataSource dataSource) {
+					@Qualifier("primaryDataSource") DataSource dataSource) {
 	
 		LocalContainerEntityManagerFactoryBean forge =	
 			 builder
-			 .dataSource(dataSource())
+			 .dataSource(dataSource)
 			 .packages("com.dub.spring.oauth.entities")
 			 .persistenceUnit("myauthDB")
 			 .properties(jpaProperties())
 			 .build();
-		System.out.println("myauthEntityManagerFactory built");
+		System.err.println("myauthEntityManagerFactory built");
 		return forge;
 	}
 

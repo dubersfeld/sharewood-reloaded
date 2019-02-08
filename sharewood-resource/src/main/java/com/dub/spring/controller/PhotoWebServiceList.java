@@ -4,8 +4,6 @@ import java.util.List;
 
 import com.dub.spring.photo.entities.Photo;
 
-
-
 /** Helper class used by REST requests */
 public class PhotoWebServiceList {
     private List<Photo> photos;

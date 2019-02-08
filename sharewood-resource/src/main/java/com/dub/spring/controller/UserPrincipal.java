@@ -10,13 +10,13 @@ import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.dub.spring.oauth.entities.MyUser;
 import com.dub.spring.oauth.entities.UserAuthority;
 
 
 public class UserPrincipal implements UserDetails, CredentialsContainer, Cloneable {
 
 	/**
+	 * This class is needed for token deserialization that happens behind the scene
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
@@ -60,22 +60,14 @@ public class UserPrincipal implements UserDetails, CredentialsContainer, Cloneab
 	}
 
 
-	public UserPrincipal(MyUser user) {		
-		this.username = user.getUsername();
-		this.hashedPassword = user.getHashedPassword();
-		this.enabled = user.isEnabled();
-		this.authorities = user.getAuthorities();
-		this.credentialsNonExpired = user.isCredentialsNonExpired();
-		this.accountNonExpired = user.isAccountNonExpired();
-		this.accountNonLocked = user.isAccountNonLocked();
-	}
-
 	@Override
-    public String getUsername() {
+    public String getUsername()
+    {
         return this.username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(String username)
+    {
         this.username = username;
     }
 	
@@ -123,7 +115,8 @@ public class UserPrincipal implements UserDetails, CredentialsContainer, Cloneab
 	 }
 	
 	@Override
-    public boolean equals(Object other) {
+    public boolean equals(Object other)
+    {
         return other instanceof UserPrincipal 
         		&&
             ((UserPrincipal)other).username == this.username
@@ -132,7 +125,8 @@ public class UserPrincipal implements UserDetails, CredentialsContainer, Cloneab
     }
 
     @Override
-    protected UserPrincipal clone() {
+    protected UserPrincipal clone()
+    {
         try {
             return (UserPrincipal)super.clone();
         } catch (CloneNotSupportedException e) {

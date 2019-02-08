@@ -67,18 +67,3 @@ h3 {
     color: red;
     display: inline-flex;
 }
-
-div.display {
-	font: 12px verdana, sans-serif;  
-    color: black;
-    margin-left: 20px;
-    display: block;
-}
-
-h1.display {
-    color: black;
-    margin-left: 20px;
-}
-
-
-

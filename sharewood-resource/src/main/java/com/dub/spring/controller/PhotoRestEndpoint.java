@@ -35,7 +35,7 @@ import com.dub.spring.exceptions.NoUploadFileException;
 import com.dub.spring.exceptions.PhotoNotFoundException;
 import com.dub.spring.exceptions.UnauthorizedException;
 import com.dub.spring.photo.entities.Photo;
-import com.dub.spring.services.PhotoServices;
+import com.dub.spring.services.PhotoService;
 
 @RestController
 @RequestMapping("/api/photos")
@@ -45,16 +45,20 @@ public class PhotoRestEndpoint {
 		= LoggerFactory.getLogger(PhotoRestEndpoint.class);	
 	
 	@Autowired
-	private PhotoServices photoServices;
+	private PhotoService photoServices;
+
 
 	@RequestMapping(
-			value ="photosMy",
+			value ="/photosMy",
 			produces = {MediaType.APPLICATION_JSON_VALUE},
 			method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
 	public PhotoWebServiceList getMyPhotos(HttpServletRequest request) {
-		if (this.getPrincipal() != null) {		
+				
+		if (this.getPrincipal() != null) {
+			
 			String username = this.getPrincipal().getUsername();
+
 			List<Photo> photos = photoServices.getPhotosForCurrentUser(username);
 			
 			PhotoWebServiceList list = new PhotoWebServiceList();
@@ -64,6 +68,7 @@ public class PhotoRestEndpoint {
 		} else {
 			return new PhotoWebServiceList();// not null
 		} 
+		
 	}
 	
 	
@@ -75,6 +80,7 @@ public class PhotoRestEndpoint {
 	public ResponseEntity<byte[]> doGetPhoto(
 									@PathVariable("photoId") String id
 									) {
+		
 		InputStream photo = null;
 		
 		Authentication auth = SecurityContextHolder
@@ -88,9 +94,9 @@ public class PhotoRestEndpoint {
 			authStrs.add(authority.getAuthority()); 
 		}
 		
-		try {
+		try {	
 			photo = photoServices.loadPhoto(Long.parseLong(id), auth.getName());				
-		
+			
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			byte[] buffer = new byte[1024];
 			int len = photo.read(buffer);
@@ -106,7 +112,10 @@ public class PhotoRestEndpoint {
 		} catch (IOException e) {
 			return new ResponseEntity<byte[]>(HttpStatus.NOT_FOUND);
 		}
+	
 	}
+	
+	
 	@RequestMapping(
 			value ="sharedPhotos",
 			produces = {MediaType.APPLICATION_JSON_VALUE, 
@@ -128,7 +137,7 @@ public class PhotoRestEndpoint {
 	
 	
 	@RequestMapping(
-    		value = "createPhoto",
+    		value = "/createPhoto",
     		method = RequestMethod.POST,
     		produces = MediaType.APPLICATION_JSON_VALUE,
     		consumes = MediaType.MULTIPART_FORM_DATA_VALUE
@@ -137,24 +146,24 @@ public class PhotoRestEndpoint {
 	           @RequestParam("uploadedFile") MultipartFile uploadedFileRef, 
 	           @RequestParam("title") String title,
 	           @RequestParam("shared") boolean shared, HttpServletRequest request) {
-		
+			
 		if (this.getPrincipal() != null) {
 			String username = this.getPrincipal().getUsername();
+			
 			try {
 				long photoId = photoServices.createPhoto(uploadedFileRef, username, title, shared);
-				
+					
 				String uri = ServletUriComponentsBuilder.fromCurrentServletMapping()
-	                .path("/api/photos/{id}").buildAndExpand(photoId).toString();
-				
+		                .path("/api/photos/{id}").buildAndExpand(photoId).toString();
+							
 				HttpHeaders headers = new HttpHeaders();
 				headers.add("Location", uri);
 			
 				return new ResponseEntity<String>(null, headers, HttpStatus.CREATED);
 			} catch (NoUploadFileException e) {
-				logger.debug("NoUploadFileException caught");
+				System.err.println("NoUploadFileException caught");
 				return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.EXPECTATION_FAILED);
-			} catch (Exception e) {
-				logger.debug("Unknown exception caught " + e);
+			} catch (Exception e) {	
 				return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.EXPECTATION_FAILED);			
 			}
 		} else {
@@ -241,14 +250,12 @@ public class PhotoRestEndpoint {
 	
 	
 	
-	
     private UserDetails getPrincipal() {
 		Authentication authentication = SecurityContextHolder
 				.getContext()
 				.getAuthentication();
 
 		if (authentication.getPrincipal() instanceof UserDetails) {
-						
 			return (UserDetails)authentication.getPrincipal();
 		} else {
 			return null;

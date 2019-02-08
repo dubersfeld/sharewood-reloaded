@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="fragments/header::header(title='home')">
 </head>
@@ -9,8 +8,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
 
 	<br /><br />
-	<h1 class="display">Welcome to Fleetwood page</h1><br /><br />
-			
+	<h1 class="display">Welcome to Fleetwood</h1><br /><br />
+	
 	<div class="display">
 		<a th:href="@{/sharewood/photosMy}">See my photos on Sharewood</a><br />
 
@@ -22,6 +21,6 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 		<a th:href="@{/sharewood/deletePhoto}">Delete a photo from Sharewood</a><br />
 	</div>
-	
+
 </body>
 </html>

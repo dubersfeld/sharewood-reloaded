@@ -5,13 +5,30 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+/** 
+ * Entity, does not implement UserDetails 
+*/
+
+@Entity
+@Table(name="user")
 public class MyUser implements Serializable {
-	
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5401371388638027961L;
+	private static final long serialVersionUID = 1L;
+	
 	private long id;
 	private String username;
 	private byte[] hashedPassword;
@@ -23,6 +40,10 @@ public class MyUser implements Serializable {
 	private Set<UserAuthority> authorities = new HashSet<>();
 	
 
+	@ElementCollection(fetch = FetchType.LAZY)
+	@CollectionTable(name = "user_Authority", joinColumns = {
+			@JoinColumn(name = "userId", referencedColumnName = "userId")
+	})
 	public Set<UserAuthority> getAuthorities() {
 		return authorities;
 	}
@@ -31,7 +52,7 @@ public class MyUser implements Serializable {
 		this.authorities = authorities;
 	}
 
-	
+	@Column(name="hashedPassword")
 	public byte[] getHashedPassword() {
 		return hashedPassword;
 	}
@@ -40,7 +61,7 @@ public class MyUser implements Serializable {
 		this.hashedPassword = hashedPassword;
 	}
 
-
+	@Column(name="accountNonExpired")
 	public boolean isAccountNonExpired() {
 		return accountNonExpired;
 	}
@@ -49,7 +70,7 @@ public class MyUser implements Serializable {
 		this.accountNonExpired = accountNonExpired;
 	}
 
-
+	@Column(name="accountNonLocked")
 	public boolean isAccountNonLocked() {
 		return accountNonLocked;
 	}
@@ -58,7 +79,7 @@ public class MyUser implements Serializable {
 		this.accountNonLocked = accountNonLocked;
 	}
 
-
+	@Column(name="credentialsNonExpired")
 	public boolean isCredentialsNonExpired() {
 		return credentialsNonExpired;
 	}
@@ -68,7 +89,12 @@ public class MyUser implements Serializable {
 	}
 
 
-    public long getId() {
+		
+	@Id
+    @Column(name = "userId")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public long getId()
+    {
         return this.id;
     }
 
@@ -86,18 +112,19 @@ public class MyUser implements Serializable {
         this.id = id;
     }
 	
-
+    @Column(name = "username")
     public String getUsername()
     {
         return this.username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(String username)
+    {
         this.username = username;
     }
 	
 
-
+	@Column(name = "enabled")
 	public boolean isEnabled() {
 		return enabled;
 	}

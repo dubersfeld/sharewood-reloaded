@@ -5,20 +5,22 @@
     <title th:text="${title}"></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css" />
-    <link rel="stylesheet" th:href="@{/css/main.css}" />      
+    <link rel="stylesheet" href="css/main.css" />      
 </head>
 
 <body>
 
 	<div th:fragment="display">
+	
+		<nav th:replace="fragments/header::language"></nav>
 		
-		<a th:href="@{backHome}" th:text="'home'"></a><br /><br />
+		<a href="backHome" th:text="#{index.backHome}"></a><br /><br />
 	
 	</div>
 	
-	<div class="display" th:fragment="displayPost">
+	<div th:fragment="displayPost">
 		
-		<a th:href="@{backHome}" th:text="'home'"></a><br /><br />
+		<a href="backHome" th:text="#{index.backHome}"></a><br /><br />
 	
 	</div>
 	

@@ -1,5 +1,6 @@
 package com.dub.spring.utils;
 
+
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+//import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
 /** 
@@ -19,8 +21,8 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 public class MyAuthenticationSuccessHandler 
 				extends SimpleUrlAuthenticationSuccessHandler {
 	
-	@Value("${gateway-url}")
-	private String gatewayUrl;
+	@Value("${authorization-url}")
+	private String authorizationURL;
 	
 	@Override
 	public void onAuthenticationSuccess(
@@ -29,14 +31,15 @@ public class MyAuthenticationSuccessHandler
 						Authentication authentication) throws ServletException, IOException {
 							
 		HttpSession session = request.getSession();
-		
+			
 		String requestURI = (String) session.getAttribute("requestURI");
-				
-		String redirectURL = (requestURI == null) ? gatewayUrl + "/" : gatewayUrl + requestURI;
+					
+		String redirectURL = (requestURI == null) ? authorizationURL  + "/" : authorizationURL  + requestURI;
 			
 		super.setDefaultTargetUrl(redirectURL);
 		
 		handle(request, response, authentication);
 		clearAuthenticationAttributes(request);	
 	}
+	
 }
